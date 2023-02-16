@@ -57,28 +57,29 @@
         if (callNow) func.apply(context, args);
       };
     }
+     function handleSlide() {
+		 // get all the images 
+		 var images = document.querySelectorAll('.slide-in');
+		 
 
-	var scrolledImages = document.querySelectorAll('.slide-in');
+		 images.forEach(function (img) {
+			 var distnaceFromOriginInYDirection= window.scrollY + window.innerHeight - img.height / 2;
+			 var imageBottoMDistnaceFromOrigin = image.scrollTop + img.height;
 
-	  function addSlide() {
-		  scrolledImages.forEach(img => {
-		  var scrolledHeight = window.scrollY + window.innerHeight - (img.height/ 2 );
-		  var imageBottomHeight = img.offsetTop + img.height;
-		  var isImageHalfScrolled = scrolledHeight > img.offsetTop;
+			 var isImageFullyScrolled = distnaceFromOriginInYDirection > imageBottoMDistnaceFromOrigin;
+			 var isImageHalfScrolled = distnaceFromOriginInYDirection > images.scrollTop;
 
-		  var isImageFullyScrolled = window.scrollY > imageBottomHeight;
+			 if(isImageHalfScrolled && !isImageFullyScrolled) {
+				 img.classList.add('active');
+			 }
+			 else {
+				 img.classList.remove('active');
+			 } 
+		 })
+	 }
 
-		   if(isImageHalfScrolled && !isImageFullyScrolled) {
-			   img.classList.add('active');
-		   }
-			  else {
-				   img.classList.remove('active');
-			  }
-			  
-	  })
-	  }
+	window.addEventListener('scroll', debounce(handleSlide));
 
-	 window.addEventListener('scroll', debounce(addSlide));
   </script>
 
   <style>
