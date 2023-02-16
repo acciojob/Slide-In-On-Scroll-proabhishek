@@ -57,28 +57,24 @@
         if (callNow) func.apply(context, args);
       };
     }
-     function handleSlide() {
-		 // get all the images 
-		 var images = document.querySelectorAll('.slide-in');
-		 
+     
+function addSlide() {
+	var scrolledImages = document.querySelectorAll('.slide-in');
+  scrolledImages.forEach((img) => {
+    var scrolledHeight = window.scrollY + window.innerHeight - img.height / 2;
+    var imageBottomHeight = img.offsetTop + img.height;
+    var isImageHalfScrolled = scrolledHeight > img.offsetTop;
 
-		 images.forEach(function (img) {
-			 var distnaceFromOriginInYDirection= window.scrollY + window.innerHeight - img.height / 2;
-			 var imageBottoMDistnaceFromOrigin = image.scrollTop + img.height;
+    var isImageFullyScrolled = window.scrollY > imageBottomHeight;
 
-			 var isImageFullyScrolled = distnaceFromOriginInYDirection > imageBottoMDistnaceFromOrigin;
-			 var isImageHalfScrolled = distnaceFromOriginInYDirection > images.scrollTop;
-
-			 if(isImageHalfScrolled && !isImageFullyScrolled) {
-				 img.classList.add('active');
-			 }
-			 else {
-				 img.classList.remove('active');
-			 } 
-		 })
-	 }
-
-	window.addEventListener('scroll', debounce(handleSlide));
+    if (isImageHalfScrolled && !isImageFullyScrolled) {
+      img.classList.add("active");
+    } else {
+      img.classList.remove("active");
+    }
+  });
+}
+window.addEventListener('scroll', debounce(addSlide));
 
   </script>
 
